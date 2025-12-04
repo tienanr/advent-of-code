@@ -1,9 +1,7 @@
 package main
 
 import (
-    "bufio"
-    "os"
-    "log"
+    "github.com/tienanr/advent-of-code/utils"
     "fmt"
 )
 
@@ -32,16 +30,8 @@ func solveBank(bank []int, n int) int {
 }
 
 func solve(fn string) {
-    file, err := os.Open(fn)
-    if err != nil {
-        log.Fatal(err)
-    }
-    defer file.Close()
-
     ans1, ans2 := 0, 0
-    scanner := bufio.NewScanner(file)
-    for scanner.Scan() {
-        line := scanner.Text()
+    for line := range utils.ReadFile(fn) {
         bank := parseLine(line)
         ans1 += solveBank(bank, 2)
         ans2 += solveBank(bank, 12)

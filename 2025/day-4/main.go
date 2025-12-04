@@ -1,10 +1,8 @@
 package main
 
 import (
-	"bufio"
+    "github.com/tienanr/advent-of-code/utils"
 	"fmt"
-	"log"
-	"os"
 )
 
 func solvePart1(m [][]rune) int {
@@ -66,17 +64,8 @@ func solvePart2(m [][]rune) int {
 }
 
 func solve(fn string) {
-	file, err := os.Open(fn)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer file.Close()
-
-	// initialize map
 	m := [][]rune{}
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		line := scanner.Text()
+	for line := range utils.ReadFile(fn) {
 		m = append(m, []rune(line))
 	}
 
@@ -85,5 +74,5 @@ func solve(fn string) {
 }
 
 func main() {
-	solve("question.txt")
+	solve("example.txt")
 }
