@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/tienanr/advent-of-code/utils"
 	"log"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -57,4 +58,27 @@ func main() {
 		}
 	}
 	fmt.Println("Part 1 solution is: ", ans1)
+
+	// solve part 2
+	ans2 := uint64(0)
+	sort.Slice(ranges, func(i, j int) bool {
+		return ranges[i].Low < ranges[j].Low
+	})
+	i, j := 0, 0
+	for i < len(ranges) {
+		// find the last range with overlap
+		lo := ranges[i].Low
+		hi := ranges[i].High
+		for j+1 < len(ranges) && hi >= ranges[j+1].Low {
+			j++
+			if ranges[j].High > hi {
+				hi = ranges[j].High
+			}
+		}
+		// count valid ids between range[i] and range[j]
+		ans2 += hi - lo + 1
+		// move cursor to larger ranges
+		i, j = j+1, j+1
+	}
+	fmt.Println("Part 2 solution is: ", ans2)
 }
