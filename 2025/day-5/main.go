@@ -35,7 +35,7 @@ func main() {
 
 	// input parsing
 	parsing_ranges := true
-	for line := range utils.ReadFile("question.txt") {
+	for line := range utils.ReadFile("example.txt") {
 		if parsing_ranges {
 			if len(line) == 0 {
 				parsing_ranges = false
@@ -64,21 +64,17 @@ func main() {
 	sort.Slice(ranges, func(i, j int) bool {
 		return ranges[i].Low < ranges[j].Low
 	})
-	i, j := 0, 0
-	for i < len(ranges) {
-		// find the last range with overlap
+	for i:=0; i<len(ranges); {
+		// combine all ranges that overlaps starting range[i]
 		lo := ranges[i].Low
 		hi := ranges[i].High
-		for j+1 < len(ranges) && hi >= ranges[j+1].Low {
-			j++
-			if ranges[j].High > hi {
-				hi = ranges[j].High
+		for i++;i < len(ranges) && hi >= ranges[i].Low; i++ {
+			if ranges[i].High > hi {
+				hi = ranges[i].High
 			}
 		}
-		// count valid ids between range[i] and range[j]
+		// count valid ids between lo and hi
 		ans2 += hi - lo + 1
-		// move cursor to larger ranges
-		i, j = j+1, j+1
 	}
 	fmt.Println("Part 2 solution is: ", ans2)
 }
