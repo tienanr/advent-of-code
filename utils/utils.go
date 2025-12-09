@@ -4,6 +4,7 @@ import (
     "bufio"
     "os"
     "log"
+	"strconv"
 )
 
 func ReadFile(fn string) <-chan string {
@@ -24,4 +25,12 @@ func ReadFile(fn string) <-chan string {
     }()
 
     return ch
+}
+
+func ParseInt(s string) int {
+	v, err := strconv.Atoi(s)
+	if err != nil {
+		panic(err)
+	}
+	return v
 }
