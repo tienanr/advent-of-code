@@ -5,6 +5,7 @@ import (
     "os"
     "log"
 	"strconv"
+    "strings"
 )
 
 func ReadFile(fn string) <-chan string {
@@ -33,4 +34,12 @@ func ParseInt(s string) int {
 		panic(err)
 	}
 	return v
+}
+
+func ParseInts(s string) []int {
+    ret := []int{}
+    for _, field := range strings.Split(s, ",") {
+        ret = append(ret, ParseInt(field))
+    }
+    return ret
 }
